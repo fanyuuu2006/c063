@@ -1,7 +1,11 @@
 import { CodeLineProps } from "../types/props";
 import { CodeToken } from "./CodeToken";
 
-export const CodeLine = ({ style, tokens, ...rest }: CodeLineProps) => {
+export const CodeLine = <T extends React.ElementType>({
+  style,
+  tokens,
+  ...rest
+}: CodeLineProps<T>) => {
   return (
     <code
       {...rest}

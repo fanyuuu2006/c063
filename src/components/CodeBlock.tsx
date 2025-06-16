@@ -1,12 +1,12 @@
 import { CodeBlockProps } from "../types/props";
 import { CodeLine } from "./CodeLine";
 
-export const CodeBlock = ({
+export const CodeBlock = <T extends React.ElementType = "span">({
   tokenLines,
   showLineNumbers = true,
   lineNumberStyle,
   ...rest
-}: CodeBlockProps) => {
+}: CodeBlockProps<T>) => {
   return (
     <pre {...rest}>
       {tokenLines.map((line, index) => (

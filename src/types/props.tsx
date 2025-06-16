@@ -21,28 +21,25 @@ export type CodeTokenType =
  *
  * @template T HTML 或客製元素，例如 span、a、Link 等
  */
-export type CodeTokenProps<T extends React.ElementType = React.ElementType> =
-  AsComponentProps<
-    T,
-    {
-      /**
-       * 語法 token 的語意類型，用於指定樣式顏色。
-       */
-      type?: CodeTokenType;
-    }
-  >;
+export type CodeTokenProps<T extends React.ElementType> = AsComponentProps<
+  T,
+  {
+    /**
+     * 語法 token 的語意類型，用於指定樣式顏色。
+     */
+    type?: CodeTokenType;
+  }
+>;
 
-export type CodeTokenBuilder<T extends React.ElementType> = (
-  children: CodeTokenProps<T>["children"] extends undefined
-    ? React.ReactNode
-    : CodeTokenProps<T>["children"],
-  props?: DistributiveOmit<CodeTokenProps<T>, "type">
+export type CodeTokenBuilder = <T extends React.ElementType>(
+  children: CodeTokenProps<T>["children"],
+  props?: CodeTokenProps<T>
 ) => CodeTokenProps<T>;
 
 /**
  * 用於單一程式碼行的屬性，用在 <CodeLine /> 或類似元件中。
  */
-export type CodeLineProps = OverrideProps<
+export type CodeLineProps<T extends React.ElementType> = OverrideProps<
   React.HTMLAttributes<HTMLElement>,
   {
     /**
@@ -58,11 +55,11 @@ export type CodeLineProps = OverrideProps<
      * ]} />
      * ```
      */
-    tokens: CodeTokenProps[];
+    tokens: CodeTokenProps<T>[];
   }
 >;
 
-export type CodeBlockProps = OverrideProps<
+export type CodeBlockProps<T extends React.ElementType> = OverrideProps<
   React.HTMLAttributes<HTMLPreElement>,
   {
     /**
@@ -84,7 +81,7 @@ export type CodeBlockProps = OverrideProps<
      * ]} />
      * ```
      */
-    tokenLines: CodeTokenProps[][];
+    tokenLines: CodeTokenProps<T>[][];
 
     /**
      * 是否顯示行號。
