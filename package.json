@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "code.js",
-  "version": "1.0.0",
-  "description": "一款以 純邏輯為核心、無樣式綁定 的 React 元件套件",
+  "name": "c063",
+  "version": "1.1.1",
+  "description": "A React component for displaying code snippets with syntax highlighting.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,8 +14,28 @@
     "Code",
     "Language",
     "Code.js",
-    "Fanyu"
-    
+    "Fanyu",
+    "Syntax Highlighting",
+    "Code Snippet",
+    "Code Display",
+    "Code Viewer",
+    "Code Block",
+    "Code Highlighting",
+    "Code Formatter",
+    "Code Viewer Component",
+    "Code Syntax",
+    "Code Snippet Viewer",
+    "Code Snippet Highlighter",
+    "Code Snippet Formatter",
+    "Code Snippet Display",
+    "Code Snippet Viewer Component",
+    "Code Snippet Highlighter Component",
+    "Code Snippet Formatter Component",
+    "Code Snippet Display Component",
+    "Code Snippet Viewer React",
+    "Code Snippet Highlighter React",
+    "Code Snippet Formatter React",
+    "Code Snippet Display React"
   ],
   "repository": {
     "type": "git",
@@ -29,8 +49,17 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.29.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.2",
-    "typescript": "^5.8.3"
+    "@typescript-eslint/eslint-plugin": "^8.34.0",
+    "@typescript-eslint/parser": "^8.34.0",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.2.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
   }
 }
