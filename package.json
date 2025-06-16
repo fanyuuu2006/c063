@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "code.js",
+  "version": "1.0.0",
+  "description": "一款以 純邏輯為核心、無樣式綁定 的 React 元件套件",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "React",
+    "Component",
+    "Code",
+    "Language",
+    "Code.js",
+    "Fanyu"
+    
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fanyuuu2006/fanyu-components.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.2",
+    "typescript": "^5.8.3"
+  }
+}
