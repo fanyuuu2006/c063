@@ -21,24 +21,23 @@ export type CodeTokenType =
  *
  * @template T HTML 或客製元素，例如 span、a、Link 等
  */
-export type CodeTokenProps<
-  T extends React.ElementType = React.ElementType<
-    React.HTMLAttributes<HTMLElement>
-  >
-> = AsComponentProps<
-  T,
-  {
-    /**
-     * 語法 token 的語意類型，用於指定樣式顏色。
-     */
-    type?: CodeTokenType;
-  }
->;
+export type CodeTokenProps<T extends React.ElementType = React.ElementType> =
+  AsComponentProps<
+    T,
+    {
+      /**
+       * 語法 token 的語意類型，用於指定樣式顏色。
+       */
+      type?: CodeTokenType;
+    }
+  >;
 
-export type CodeTokenBuilder = (
-  children: CodeTokenProps["children"],
-  props?: DistributiveOmit<CodeTokenProps, "type">
-) => CodeTokenProps;
+export type CodeTokenBuilder<T extends React.ElementType> = (
+  children: CodeTokenProps<T>["children"] extends undefined
+    ? React.ReactNode
+    : CodeTokenProps<T>["children"],
+  props?: DistributiveOmit<CodeTokenProps<T>, "type">
+) => CodeTokenProps<T>;
 
 /**
  * 用於單一程式碼行的屬性，用在 <CodeLine /> 或類似元件中。

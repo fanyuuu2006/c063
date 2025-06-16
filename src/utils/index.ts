@@ -4,7 +4,10 @@ export const createToken = new Proxy(
   {},
   {
     get: (_, prop: CodeTokenType) => {
-      const builder: CodeTokenBuilder = (children, props?) => ({
+      const builder: CodeTokenBuilder<React.ElementType> = (
+        children,
+        props?
+      ) => ({
         type: prop,
         children,
         ...props,
@@ -12,7 +15,7 @@ export const createToken = new Proxy(
       return builder;
     },
   }
-) as Record<CodeTokenType, CodeTokenBuilder>;
+) as Record<CodeTokenType, CodeTokenBuilder<React.ElementType>>;
 
 export const whiteSpace = (count: number = 1): CodeTokenProps => ({
   type: "default",

@@ -8,12 +8,9 @@ export type OverrideProps<T, P> = DistributiveOmit<T, keyof P> & P;
 
 /** 支援元件型別 (可複寫屬性)*/
 export type AsComponentProps<
-  Component extends React.ElementType,
+  As extends React.ElementType,
   PermanentProps extends object = {}
-> = OverrideProps<
-  React.ComponentProps<Component>,
-  {
-    /** 指定用於渲染的 React 元件（可為任意元件*/
-    as?: Component;
-  } & PermanentProps
->;
+> = OverrideProps<React.ComponentPropsWithRef<As>, PermanentProps> & {
+  /** 指定用於渲染的 React 元件（可為任意元件*/
+  as?: As;
+};
