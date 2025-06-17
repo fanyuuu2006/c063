@@ -25,8 +25,6 @@ A highly customizable React component library for displaying syntax-highlighted 
 
 ### Installation
 
-Install using npm, yarn, or pnpm:
-
 ```bash
 npm install c063
 ```
