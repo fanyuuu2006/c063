@@ -1,6 +1,10 @@
 import React from "react";
-import { CodeTokenBuilder, CodeTokenProps, CodeTokenType } from "../types";
-
+import {
+  CodeTokenBuilder,
+  CodeTokenProps,
+  CodeTokenType,
+  ParsableLanguage,
+} from "../types";
 
 /**
  * 語法 token 的建構器集合，每個 key 對應一種語法類型（如 `keyword-blue`, `string`, `comment` 等），
@@ -65,3 +69,19 @@ export const extractTokenContent = <T extends React.ElementType>(
 };
 
 export default c063;
+
+
+/**
+ * 待實現
+ */
+const _parseTokens = new Proxy(
+  {},
+  {
+    get: (_, prop: ParsableLanguage) => {
+      const parser = (content: string): CodeTokenProps<"span">[][] => {
+        return [];
+      };
+      return parser;
+    },
+  }
+) as Record<ParsableLanguage, (content: string) => CodeTokenProps<"span">[][]>;

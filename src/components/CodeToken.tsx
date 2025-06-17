@@ -9,6 +9,7 @@ import { CodeTokenProps } from "../types/index";
  * @param props.type 語法類型，用於對應不同顏色
  * @param props.style 額外樣式，會與語法顏色合併
  * @param props.children 顯示的程式碼字串
+ * @param props.theme 主題設定
  * @param rest 其他 HTML 屬性
  * @returns JSX 元素，顯示帶有語法顏色的 token
  */

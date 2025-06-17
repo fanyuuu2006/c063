@@ -1,10 +1,9 @@
-import { themes } from "../libs";
+import { parsableLanguages, themes } from "../libs";
 import { AsComponentProps, OverrideProps } from "./common";
 /**
  * 用於表示語法高亮中每個 token 的語意分類，對應於 `<CodeToken />` 中的 `type`。
  *
  * 每個類型會對應特定的顏色與用途，例如關鍵字、數字、字串、註解等，
- * 可配合 `codeColoreMap` 指定顯示樣式。s
  *
  * 類型分為以下幾大類：
  *
@@ -143,3 +142,5 @@ export type CodeBlockProps<T extends React.ElementType> = OverrideProps<
     theme?: CodeTheme;
   }
 >;
+
+export type ParsableLanguage = (typeof parsableLanguages)[number];
