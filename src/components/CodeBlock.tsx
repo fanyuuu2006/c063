@@ -1,10 +1,20 @@
 import { CodeBlockProps } from "../types/props";
 import { CodeLine } from "./CodeLine";
-
+/**
+ * 顯示完整程式碼區塊，支援多行語法 token 與行號顯示。
+ *
+ * @template T 元件渲染類型，預設為 <span>
+ * @param props.tokenLines 所有程式碼行的 token 陣列
+ * @param props.showLineNumbers 是否顯示行號，預設為 true
+ * @param props.lineNumberStyle 行號的自訂樣式
+ * @param rest 其他傳遞給 <pre> 的屬性
+ * @returns JSX 元素，呈現語法高亮的程式碼區塊
+ */
 export const CodeBlock = <T extends React.ElementType = "span">({
   tokenLines,
   showLineNumbers = true,
   lineNumberStyle,
+  theme,
   ...rest
 }: CodeBlockProps<T>) => {
   return (
@@ -19,7 +29,6 @@ export const CodeBlock = <T extends React.ElementType = "span">({
             gap: "0.5rem",
           }}
         >
-          {/* 如果需要顯示行號，則在每行前添加行號 */}
           {showLineNumbers && (
             <span
               style={{ color: "#888", userSelect: "none", ...lineNumberStyle }}
@@ -27,7 +36,7 @@ export const CodeBlock = <T extends React.ElementType = "span">({
               {index + 1}
             </span>
           )}
-          <CodeLine tokens={line} />
+          <CodeLine theme={theme} tokens={line} />
         </div>
       ))}
     </pre>
