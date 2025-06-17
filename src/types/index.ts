@@ -32,7 +32,7 @@ export type CodeTokenType =
   | "type" // 類型定義：type、interface、enum
   | "variable" // 變數名、函式名、類別名等識別符號
   | "constant" // 常數值：例如 enum 值、靜態屬性
-  | `brackets${1 | 2 | 3}` // 括號配對，多層不同樣式：(), [], {}
+  | `brackets${1 | 2 | 3}` // 括號，多層巢狀不同樣式：{[()]}
   | "operator" // 運算符號：=、+、*、===、<、>= 等
   | "default"; // 其他符號：, ; . ? ! 等
 
