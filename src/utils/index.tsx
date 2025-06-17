@@ -15,7 +15,7 @@ import { CodeTokenBuilder, CodeTokenProps, CodeTokenType } from "../types";
  *
  * @returns 一個以 `CodeTokenType` 為 key 的建構器函式集合
  */
-export const c063 = new Proxy(
+const c063 = new Proxy(
   {},
   {
     get: (_, prop: CodeTokenType) => {
@@ -45,3 +45,5 @@ export const c063 = new Proxy(
  */
 export const whiteSpace = (count: number = 1): CodeTokenProps<"span"> =>
   c063.default(" ".repeat(count));
+
+export default c063;

@@ -1,4 +1,4 @@
-import { CodeBlockProps } from "../types/props";
+import { CodeBlockProps } from "../types/index";
 import { CodeLine } from "./CodeLine";
 /**
  * 顯示完整程式碼區塊，支援多行語法 token 與行號顯示。

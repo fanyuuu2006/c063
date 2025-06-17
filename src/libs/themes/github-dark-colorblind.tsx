@@ -1,4 +1,4 @@
-import { CodeTokenType } from "../types";
+import { CodeTokenType } from "../../types";
 
 export const map: Record<CodeTokenType, React.CSSProperties["color"]> = {
   function: "rgb(210, 168, 255)",

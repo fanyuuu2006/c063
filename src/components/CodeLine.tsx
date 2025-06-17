@@ -1,4 +1,4 @@
-import { CodeLineProps } from "../types/props";
+import { CodeLineProps } from "../types/index";
 import { CodeToken } from "./CodeToken";
 /**
  * 渲染單一程式碼行，包含多個語法 token。
