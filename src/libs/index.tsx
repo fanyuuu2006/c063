@@ -37,5 +37,3 @@ export const themeMap: Record<
   CodeTheme,
   Record<CodeTokenType, React.CSSProperties["color"]>
 > = _themeRegistry;
-
-export const parsableLanguages = ["javascript"] as const;

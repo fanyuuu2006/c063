@@ -1,5 +1,7 @@
 import React from "react";
 import { CodeTokenBuilder, CodeTokenProps, CodeTokenType } from "../types";
+
+
 /**
  * 語法 token 的建構器集合，每個 key 對應一種語法類型（如 `keyword-blue`, `string`, `comment` 等），
  * 透過 Proxy 生成對應的 `CodeTokenBuilder`。
