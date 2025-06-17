@@ -36,7 +36,7 @@ const c063 = new Proxy(
           ...props,
         };
       };
-      return builder as CodeTokenBuilder;
+      return builder;
     },
   }
 ) as Record<CodeTokenType, CodeTokenBuilder>;
@@ -69,7 +69,6 @@ export const extractTokenContent = <T extends React.ElementType>(
 };
 
 export default c063;
-
 
 /**
  * 待實現

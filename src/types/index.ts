@@ -64,7 +64,7 @@ export type CodeTokenProps<T extends React.ElementType> = AsComponentProps<
   }
 >;
 
-export type CodeTokenBuilder = <T extends React.ElementType>(
+export type CodeTokenBuilder = <T extends React.ElementType = "span">(
   children: CodeTokenProps<T>["children"],
   props?: CodeTokenProps<T>
 ) => CodeTokenProps<T>;
