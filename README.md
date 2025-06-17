@@ -1,4 +1,7 @@
 <div align="center">
+    <picture>
+      <img alt="icon" src="./public/icon.png" height="128">
+    </picture>
   <h1>c063</h1>
 
 <div style="display: flex; justify-content: center">
