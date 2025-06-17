@@ -1,6 +1,5 @@
-import { useLayoutEffect, useState } from "react";
-import { CodeTokenProps, CodeTokenType } from "../types/index";
-import { loadTheme } from "../utils/theme";
+import { themeMap } from "../libs/index";
+import { CodeTokenProps } from "../types/index";
 
 /**
  * 渲染單一語法 token（例如關鍵字、字串、註解等），可指定標籤與樣式。
@@ -22,23 +21,12 @@ export const CodeToken = <T extends React.ElementType = "span">({
   ...rest
 }: CodeTokenProps<T>) => {
   const Tag = as || "span";
-  const [currTheme, setCurrTheme] = useState<Record<
-    CodeTokenType,
-    React.CSSProperties["color"]
-  > | null>(null);
-
-  useLayoutEffect(() => {
-    if (theme) {
-      loadTheme(theme).then((res) => setCurrTheme(res));
-    }
-  }, [theme]);
 
   return (
-    // eslint-disable-next-line react/react-in-jsx-scope
     <Tag
       {...rest}
       style={{
-        color: currTheme?.[type || "default"] || undefined,
+        color: themeMap[theme || "default-dark-modern"][type || "default"],
         ...style,
       }}
     >

@@ -1,4 +1,8 @@
 export * from './types';
 export * from './components';
-export * from './utils';
-export * from './libs';
+
+import c063, { whiteSpace }from './utils';
+export default c063;
+export {
+    whiteSpace
+}

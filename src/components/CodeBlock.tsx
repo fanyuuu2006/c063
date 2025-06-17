@@ -20,6 +20,7 @@ export const CodeBlock = <T extends React.ElementType = "span">({
   return (
     <pre {...rest}>
       {tokenLines.map((line, index) => (
+        // eslint-disable-next-line react/react-in-jsx-scope
         <div
           key={index}
           style={{
