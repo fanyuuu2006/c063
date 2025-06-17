@@ -9,7 +9,7 @@ import { CodeToken } from "./CodeToken";
  * @param rest 其他 HTMLAttributes
  * @returns JSX 元素，呈現語法 token 的單行程式碼
  */
-export const CodeLine = <T extends React.ElementType>({
+export const CodeLine = <T extends React.ElementType = "span">({
   style,
   tokens,
   theme,

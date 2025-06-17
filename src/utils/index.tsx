@@ -1,3 +1,4 @@
+import React from "react";
 import { CodeTokenBuilder, CodeTokenProps, CodeTokenType } from "../types";
 /**
  * 語法 token 的建構器集合，每個 key 對應一種語法類型（如 `keyword-blue`, `string`, `comment` 等），
@@ -45,5 +46,20 @@ const c063 = new Proxy(
  */
 export const whiteSpace = (count: number = 1): CodeTokenProps<"span"> =>
   c063.default(" ".repeat(count));
+
+export const extractTokenContent = <T extends React.ElementType>(
+  token: CodeTokenProps<T>
+): string => {
+  const _extract = (children: React.ReactNode): string => {
+    if (typeof children === "string") return children;
+    if (typeof children === "number") return children.toString();
+    if (Array.isArray(children)) return children.map(_extract).join("");
+    if (React.isValidElement(children)) {
+      return _extract((children as React.JSX.Element).props.children);
+    }
+    return ""; // 如果 children 是 null 或 undefined，則返回空字串
+  };
+  return _extract(token.children);
+};
 
 export default c063;
