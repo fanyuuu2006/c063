@@ -24,14 +24,15 @@ import { AsComponentProps, OverrideProps } from "./common";
  * const token2: CodeTokenType = "string";
  */
 export type CodeTokenType =
-  | `keyword${1 | 2}` // 關鍵字，分兩種樣式層級
+  | `keyword${number}` // 關鍵字，分兩種樣式層級
+  | "function" // 函式名
   | "string" // 字串常值：'abc'、"hello"
   | "number" // 數值常量：123、3.14
   | "comment" // 註解內容：// 或 /* */
   | "type" // 類型定義：type、interface、enum
   | "variable" // 變數名、函式名、類別名等識別符號
   | "constant" // 常數值：例如 enum 值、靜態屬性
-  | `brackets${1 | 2 | 3}` // 括號配對，三層不同樣式：(), [], {}
+  | `brackets${number}` // 括號配對，多層不同樣式：(), [], {}
   | "operator" // 運算符號：=、+、*、===、<、>= 等
   | "default"; // 其他符號：, ; . ? ! 等
 

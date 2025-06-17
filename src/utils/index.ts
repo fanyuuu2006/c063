@@ -5,12 +5,12 @@ import { CodeTokenBuilder, CodeTokenProps, CodeTokenType } from "../types";
  *
  * 使用方式：
  * ```tsx
- * c063["keyword-blue"]("const") // -> { type: "keyword-blue", children: "const" }
- * c063["string"]("'hello'", { as: "code" }) // 可自訂 as 或其他 props
+ * c063.keyword1("const") // -> { type: "keyword1", children: "const" }
+ * c063.string("'hello'", { as: "code" }) // 可自訂 as 或其他 props
  * ```
  *
  * @example
- * tokens.push(c063["keyword-blue"]("const"));
+ * tokens.push(c063.keyword1("const"));
  * tokens.push(c063.string("'Hello'"));
  *
  * @returns 一個以 `CodeTokenType` 為 key 的建構器函式集合
