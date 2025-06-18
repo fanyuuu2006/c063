@@ -7,7 +7,7 @@ import { AsComponentProps, OverrideProps } from "./common";
  *
  * 類型分為以下幾大類：
  *
- * - `keyword1` / `keyword2`: 關鍵字，如 `const`、`return`、`import` 等，分顏色類別。
+ * - `keyword1` / `keyword2`: 關鍵字，如 `const`/`return`、`import` 等，分顏色類別。
  * - `string`: 字串常值，如 `'text'`、`"value"`。
  * - `number`: 數字常值，如 `123`、`3.14`。
  * - `comment`: 註解內容，如 `//`。
@@ -107,13 +107,13 @@ export type CodeBlockProps<T extends React.ElementType> = OverrideProps<
      * ```tsx
      * <CodeBlock tokenLines={[
      *   [
-     *     { type: "keyword-blue", children: "const" },
+     *     { type: "keyword1", children: "const" },
      *     { type: "variable", children: "x" },
      *     { type: "operator", children: "=" },
      *     { type: "number", children: "42" },
      *   ],
      *   [
-     *     { type: "keyword-purple", children: "return" },
+     *     { type: "keyword2", children: "return" },
      *     { type: "variable", children: "x" },
      *   ],
      * ]} />
@@ -137,7 +137,7 @@ export type CodeBlockProps<T extends React.ElementType> = OverrideProps<
     lineNumberStyle?: React.CSSProperties;
     /**
      * 語法主題名稱。
-     * @default "vscode-dark"
+     * @default "default-dark-modern"
      */
     theme?: CodeTheme;
   }
