@@ -49,20 +49,21 @@ export type CodeTheme = (typeof themes)[number];
  *
  * @template T HTML 或客製元素，例如 span、a、Link 等
  */
-export type CodeTokenProps<T extends React.ElementType> = AsComponentProps<
-  T,
-  {
-    /**
-     * 語法 token 的語意類型，用於指定樣式顏色。
-     */
-    type?: CodeTokenType;
-    /**
-     * 語法主題名稱。
-     * @default "vscode-dark"
-     */
-    theme?: CodeTheme;
-  }
->;
+export type CodeTokenProps<T extends React.ElementType = "span"> =
+  AsComponentProps<
+    T,
+    {
+      /**
+       * 語法 token 的語意類型，用於指定樣式顏色。
+       */
+      type?: CodeTokenType;
+      /**
+       * 語法主題名稱。
+       * @default "vscode-dark"
+       */
+      theme?: CodeTheme;
+    }
+  >;
 
 export type CodeTokenBuilder = <T extends React.ElementType = "span">(
   children: CodeTokenProps<T>["children"],
@@ -72,7 +73,7 @@ export type CodeTokenBuilder = <T extends React.ElementType = "span">(
 /**
  * 用於單一程式碼行的屬性，用在 <CodeLine /> 或類似元件中。
  */
-export type CodeLineProps<T extends React.ElementType> = OverrideProps<
+export type CodeLineProps<T extends React.ElementType = "span"> = OverrideProps<
   React.HTMLAttributes<HTMLElement>,
   {
     /**
@@ -103,56 +104,57 @@ export type CodeLineProps<T extends React.ElementType> = OverrideProps<
   }
 >;
 
-export type CodeBlockProps<T extends React.ElementType> = OverrideProps<
-  React.HTMLAttributes<HTMLPreElement>,
-  {
-    /**
-     * 所有程式碼行的 token 陣列。
-     *
-     * @example
-     * ```tsx
-     * <CodeBlock tokenLines={[
-     *   [
-     *     { type: "keyword1", children: "const" },
-     *     { type: "variable", children: "x" },
-     *     { type: "operator", children: "=" },
-     *     { type: "number", children: "42" },
-     *   ],
-     *   [
-     *     { type: "keyword2", children: "return" },
-     *     { type: "variable", children: "x" },
-     *   ],
-     * ]} />
-     * ```
-     */
-    tokenLines: CodeTokenProps<T>[][];
+export type CodeBlockProps<T extends React.ElementType = "span"> =
+  OverrideProps<
+    React.HTMLAttributes<HTMLPreElement>,
+    {
+      /**
+       * 所有程式碼行的 token 陣列。
+       *
+       * @example
+       * ```tsx
+       * <CodeBlock tokenLines={[
+       *   [
+       *     { type: "keyword1", children: "const" },
+       *     { type: "variable", children: "x" },
+       *     { type: "operator", children: "=" },
+       *     { type: "number", children: "42" },
+       *   ],
+       *   [
+       *     { type: "keyword2", children: "return" },
+       *     { type: "variable", children: "x" },
+       *   ],
+       * ]} />
+       * ```
+       */
+      tokenLines: CodeTokenProps<T>[][];
 
-    /**
-     * 是否顯示行號。
-     * @default true
-     */
-    showLineNumbers?: boolean;
-    /**
-     * 行號的樣式。
-     * @default { color: "#888", fontSize: "0.8em" }
-     * @example
-     * ```tsx
-     * <CodeBlock lineNumberStyle={{ color: "#888", fontSize: "0.8em" }} />
-     * ```
-     * */
-    lineNumberStyle?: React.CSSProperties;
-    /**
-     * 語法主題名稱。
-     * @default "default-dark-modern"
-     */
-    theme?: CodeTheme;
+      /**
+       * 是否顯示行號。
+       * @default true
+       */
+      showLineNumbers?: boolean;
+      /**
+       * 行號的樣式。
+       * @default { color: "#888", fontSize: "0.8em" }
+       * @example
+       * ```tsx
+       * <CodeBlock lineNumberStyle={{ color: "#888", fontSize: "0.8em" }} />
+       * ```
+       * */
+      lineNumberStyle?: React.CSSProperties;
+      /**
+       * 語法主題名稱。
+       * @default "default-dark-modern"
+       */
+      theme?: CodeTheme;
 
-    /**
-     * 是否自動換行
-     * @default true
-     */
-    autoWrap?: boolean;
-  }
->;
+      /**
+       * 是否自動換行
+       * @default true
+       */
+      autoWrap?: boolean;
+    }
+  >;
 
 export type ParsableLanguage = (typeof parsableLanguages)[number];
