@@ -1,5 +1,6 @@
 import { CodeBlockProps } from "../types/index";
 import { CodeLine } from "./CodeLine";
+
 /**
  * 顯示完整程式碼區塊，支援多行語法 token 與行號顯示。
  *
@@ -15,32 +16,38 @@ export const CodeBlock = <T extends React.ElementType = "span">({
   tokenLines,
   showLineNumbers = true,
   lineNumberStyle,
+  autoWrap,
   theme,
   ...rest
 }: CodeBlockProps<T>) => {
   return (
-    <pre {...rest}>
-      {tokenLines.map((line, index) => (
-        // eslint-disable-next-line react/react-in-jsx-scope
-        <div
-          key={index}
-          style={{
-            display: "flex",
-            flexWrap: "nowrap",
-            width: "100%",
-            gap: "0.5rem",
-          }}
-        >
-          {showLineNumbers && (
-            <span
-              style={{ color: "#888", userSelect: "none", ...lineNumberStyle }}
-            >
-              {index + 1}
-            </span>
-          )}
-          <CodeLine theme={theme} tokens={line} />
-        </div>
-      ))}
+    <pre {...rest} style={{ margin: 0, padding: 0, overflowX: "auto" }}>
+      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+        <tbody>
+          {tokenLines.map((line, index) => (
+            <tr key={index} style={{ verticalAlign: "top" }}>
+              {showLineNumbers && (
+                <td
+                  style={{
+                    paddingInline: "0.5rem",
+                    textAlign: "right",
+                    whiteSpace: "pre",
+                    fontVariantNumeric: "tabular-nums",
+                    color: "#888",
+                    userSelect: "none",
+                    ...lineNumberStyle,
+                  }}
+                >
+                  {index + 1}
+                </td>
+              )}
+              <td style={{ width: "100%" }}>
+                <CodeLine theme={theme} tokens={line} autoWrap={autoWrap} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </pre>
   );
 };

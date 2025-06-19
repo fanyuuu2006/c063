@@ -94,6 +94,12 @@ export type CodeLineProps<T extends React.ElementType> = OverrideProps<
      * @default "vscode-dark"
      */
     theme?: CodeTheme;
+
+    /**
+     * 是否自動換行
+     * @default true
+     */
+    autoWrap?: boolean;
   }
 >;
 
@@ -140,6 +146,12 @@ export type CodeBlockProps<T extends React.ElementType> = OverrideProps<
      * @default "default-dark-modern"
      */
     theme?: CodeTheme;
+
+    /**
+     * 是否自動換行
+     * @default true
+     */
+    autoWrap?: boolean;
   }
 >;
 

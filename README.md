@@ -75,6 +75,7 @@ interface CodeBlockProps<T extends React.ElementType> {
   showLineNumbers?: boolean; // Default true
   lineNumberStyle?: React.CSSProperties;
   theme?: CodeTheme; // e.g. "github-dark"
+  autoWrap:? boolean;
 }
 ```
 
@@ -84,6 +85,7 @@ interface CodeBlockProps<T extends React.ElementType> {
 interface CodeLineProps<T extends React.ElementType> {
   tokens: CodeTokenProps<T>[];
   theme?: CodeTheme;
+  autoWrap:? boolean;
 }
 ```
 

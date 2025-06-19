@@ -6,7 +6,8 @@ import { CodeToken } from "./CodeToken";
  * @template T 元件渲染類型，例如 <code>、<span> 等
  * @param props.tokens 該行所包含的語法 token 陣列
  * @param props.style 自訂樣式，會與 whiteSpace: pre-wrap 合併
- * @param props.theme 主題 
+ * @param props.theme 主題
+ * @param prop.autoWrap 是否自動換行
  * @param rest 其他 HTMLAttributes
  * @returns JSX 元素，呈現語法 token 的單行程式碼
  */
@@ -14,13 +15,14 @@ export const CodeLine = <T extends React.ElementType = "span">({
   style,
   tokens,
   theme,
+  autoWrap = true,
   ...rest
 }: CodeLineProps<T>) => {
   return (
     <code
       {...rest}
       style={{
-        whiteSpace: "pre-wrap",
+        whiteSpace: autoWrap ? "pre-wrap" : "nowrap",
         ...style,
       }}
     >
