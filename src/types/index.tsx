@@ -59,7 +59,7 @@ export type CodeTokenProps<T extends React.ElementType = "span"> =
       type?: CodeTokenType;
       /**
        * 語法主題名稱。
-       * @default "vscode-dark"
+       * @default "vscode-dark-modern"
        */
       theme?: CodeTheme;
     }
@@ -136,7 +136,7 @@ export type CodeBlockProps<T extends React.ElementType = "span"> =
       showLineNumbers?: boolean;
       /**
        * 行號的樣式。
-       * @default { color: "#888", fontSize: "0.8em" }
+       * @default{ color: "#888", fontSize: "0.8em" }
        * @example
        * ```tsx
        * <CodeBlock lineNumberStyle={{ color: "#888", fontSize: "0.8em" }} />

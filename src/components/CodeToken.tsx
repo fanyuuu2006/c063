@@ -17,8 +17,9 @@ export const CodeToken = <T extends React.ElementType = "span">({
   as,
   style,
   children,
-  type,
-  theme,
+  className,
+  type = "default",
+  theme = "default-dark-modern",
   ...rest
 }: CodeTokenProps<T>) => {
   const Tag = as || "span";
@@ -26,8 +27,9 @@ export const CodeToken = <T extends React.ElementType = "span">({
   return (
     <Tag
       {...rest}
+      className={`c063-${type} ${className || ""}`}
       style={{
-        color: themeMap[theme || "default-dark-modern"][type || "default"],
+        color: themeMap[theme][type],
         ...style,
       }}
     >
