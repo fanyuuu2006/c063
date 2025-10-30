@@ -6,6 +6,27 @@ import {
   ParsableLanguage,
 } from "../types";
 
+export const isCodeTokenType = (value: any): value is CodeTokenType => {
+  const codeTokenTypes: CodeTokenType[] = [
+    "keyword1",
+    "keyword2",
+    "function",
+    "string",
+    "number",
+    "comment",
+    "type",
+    "variable",
+    "constant",
+    "brackets1",
+    "brackets2",
+    "brackets3",
+    "operator",
+    "default",
+  ];
+  return codeTokenTypes.includes(value);
+};
+  
+
 /**
  * `c063` 是一組語法高亮 token 建構器集合。
  * 每個 key 對應一種語法分類（如 `keyword1`, `string`, `comment` 等），
@@ -22,7 +43,7 @@ import {
 const c063 = new Proxy(
   {},
   {
-    get: (_, prop: CodeTokenType) => {
+    get: (target, prop: CodeTokenType, receiver) => {
       /**
        * 建立指定語法類型的 CodeToken。
        *
@@ -34,6 +55,9 @@ const c063 = new Proxy(
         children: React.ReactNode,
         props?: CodeTokenProps<T>
       ) => {
+        if (!isCodeTokenType(prop)) {
+          return Reflect.get(target, prop, receiver);
+        }
         return {
           children,
           type: prop,
