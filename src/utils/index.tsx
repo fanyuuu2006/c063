@@ -6,26 +6,35 @@ import {
   ParsableLanguage,
 } from "../types";
 
+const CODE_TOKEN_TYPES = new Set<CodeTokenType>([
+  "keyword1",
+  "keyword2",
+  "function",
+  "string",
+  "number",
+  "comment",
+  "type",
+  "variable",
+  "constant",
+  "brackets1",
+  "brackets2",
+  "brackets3",
+  "operator",
+  "default",
+]);
+/**
+ * 檢查給定的值是否為有效的 `CodeTokenType`。
+ * @param value 要檢查的值
+ * @returns 如果值是有效的 `CodeTokenType`，則返回 `true`，否則返回 `false`
+ * @example
+ * ```ts
+ * isCodeTokenType("keyword1"); // true
+ * isCodeTokenType("invalidType"); // false
+ * ```
+ */
 export const isCodeTokenType = (value: any): value is CodeTokenType => {
-  const codeTokenTypes: CodeTokenType[] = [
-    "keyword1",
-    "keyword2",
-    "function",
-    "string",
-    "number",
-    "comment",
-    "type",
-    "variable",
-    "constant",
-    "brackets1",
-    "brackets2",
-    "brackets3",
-    "operator",
-    "default",
-  ];
-  return codeTokenTypes.includes(value);
+  return CODE_TOKEN_TYPES.has(value);
 };
-  
 
 /**
  * `c063` 是一組語法高亮 token 建構器集合。
@@ -43,7 +52,7 @@ export const isCodeTokenType = (value: any): value is CodeTokenType => {
 const c063 = new Proxy(
   {},
   {
-    get: (target, prop: CodeTokenType, receiver) => {
+    get: (_, prop: CodeTokenType) => {
       /**
        * 建立指定語法類型的 CodeToken。
        *
@@ -56,7 +65,7 @@ const c063 = new Proxy(
         props?: CodeTokenProps<T>
       ) => {
         if (!isCodeTokenType(prop)) {
-          return Reflect.get(target, prop, receiver);
+          throw new Error(`Invalid CodeTokenType: ${String(prop)}`);
         }
         return {
           children,
@@ -132,6 +141,9 @@ export const isTokenEqual = <T extends React.ElementType>(
   a: CodeTokenProps<T>,
   b: CodeTokenProps<T>
 ): boolean => {
+  if (!isCodeTokenType(a.type) || !isCodeTokenType(b.type)) {
+    return false;
+  }
   return a.type === b.type && extractTokenContent(a) === extractTokenContent(b);
 };
 
