@@ -1,6 +1,7 @@
-import { parsableLanguages, themes } from "../libs";
+import { themes } from "../libs";
 import { AsComponentProps, OverrideProps } from "./common";
 import { CODE_TOKEN_TYPES } from "../libs/index";
+import { parsableLanguages } from "../libs/parser";
 /**
  * 用於表示語法高亮中每個 token 的語意分類，對應於 `<CodeToken />` 中的 `type`。
  *
