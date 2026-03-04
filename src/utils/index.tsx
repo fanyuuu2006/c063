@@ -4,7 +4,10 @@ import {
   CodeTokenProps,
   CodeTokenType,
   ParsableLanguage,
+  ParsableLanguageConfig,
+  ParseTokensFunction,
 } from "../types";
+import { parserConfigs } from "../libs/parser";
 
 const CODE_TOKEN_TYPES = new Set<CodeTokenType>([
   "keyword1",
@@ -62,7 +65,7 @@ const c063 = new Proxy(
        */
       const builder = <T extends React.ElementType = "span">(
         children: React.ReactNode,
-        props?: CodeTokenProps<T>
+        props?: CodeTokenProps<T>,
       ) => {
         if (!isCodeTokenType(prop)) {
           throw new Error(`Invalid CodeTokenType: ${String(prop)}`);
@@ -75,7 +78,7 @@ const c063 = new Proxy(
       };
       return builder;
     },
-  }
+  },
 ) as Record<CodeTokenType, CodeTokenBuilder>;
 export default c063;
 
@@ -125,7 +128,7 @@ const _extractReactNode = (children: React.ReactNode): string => {
  * ```
  */
 export const extractTokenContent = <T extends React.ElementType>(
-  token: CodeTokenProps<T>
+  token: CodeTokenProps<T>,
 ): string => {
   return _extractReactNode(token.children);
 };
@@ -139,7 +142,7 @@ export const extractTokenContent = <T extends React.ElementType>(
  */
 export const isTokenEqual = <T extends React.ElementType>(
   a: CodeTokenProps<T>,
-  b: CodeTokenProps<T>
+  b: CodeTokenProps<T>,
 ): boolean => {
   if (!isCodeTokenType(a.type) || !isCodeTokenType(b.type)) {
     return false;
@@ -154,7 +157,7 @@ export const isTokenEqual = <T extends React.ElementType>(
  * @returns 分組後的 token 映射，key 為 `CodeTokenType`
  */
 export const groupTokensByType = <T extends React.ElementType>(
-  lines: CodeTokenProps<T>[][]
+  lines: CodeTokenProps<T>[][],
 ): Record<CodeTokenType, CodeTokenProps<T>[]> => {
   const grouped: Record<CodeTokenType, CodeTokenProps<T>[]> = {
     keyword1: [],
@@ -181,30 +184,144 @@ export const groupTokensByType = <T extends React.ElementType>(
 };
 
 /**
- * 待實作
+ * 通用解析器工廠
+ */
+const createGenericParser = (
+  config: ParsableLanguageConfig,
+): ParseTokensFunction => {
+  const {
+    patterns,
+    keywords1 = new Set(),
+    keywords2 = new Set(),
+    detectFunctions = true,
+  } = config;
+
+  return (code: string) => {
+    const lines: CodeTokenProps<"span">[][] = [];
+    let currentLine: CodeTokenProps<"span">[] = [];
+    let cursor = 0;
+    let bracketDepth = 0;
+
+    const getBracketType = (depth: number): CodeTokenType => {
+      const types: CodeTokenType[] = ["brackets1", "brackets2", "brackets3"];
+      return types[depth % 3];
+    };
+
+    while (cursor < code.length) {
+      // 處理換行
+      if (code[cursor] === "\n") {
+        lines.push(currentLine);
+        currentLine = [];
+        cursor++;
+        continue;
+      }
+
+      let bestMatch: { type: CodeTokenType; value: string } | null = null;
+      const remainingCode = code.slice(cursor);
+
+      for (const { type, regex } of patterns) {
+        const match = remainingCode.match(regex);
+        if (match) {
+          bestMatch = { type, value: match[0] };
+          break;
+        }
+      }
+
+      if (bestMatch) {
+        let finalType: CodeTokenType = bestMatch.type;
+
+        // 針對 variable 類型進行關鍵字或函式檢查
+        if (finalType === "variable") {
+          if (keywords1.has(bestMatch.value)) {
+            finalType = "keyword1";
+          } else if (keywords2.has(bestMatch.value)) {
+            finalType = "keyword2";
+          } else if (detectFunctions) {
+            // 檢查後方是否緊接括號，若是則視為函式
+            let nextIdx = bestMatch.value.length;
+            while (
+              nextIdx < remainingCode.length &&
+              /[ \t\r\n]/.test(remainingCode[nextIdx])
+            ) {
+              nextIdx++;
+            }
+            if (
+              nextIdx < remainingCode.length &&
+              remainingCode[nextIdx] === "("
+            ) {
+              finalType = "function";
+            }
+          }
+        }
+
+        // 處理括號顏色輪替
+        if (finalType === "brackets1") {
+          const char = bestMatch.value;
+          // 開括號增加深度，閉括號減少深度（簡單實作）
+          if (["(", "[", "{"].includes(char)) {
+            finalType = getBracketType(bracketDepth);
+            bracketDepth++;
+          } else {
+            bracketDepth = Math.max(0, bracketDepth - 1);
+            finalType = getBracketType(bracketDepth);
+          }
+        }
+
+        // 處理多行 Token (如多行註解) 可能跨越換行的情況
+        if (bestMatch.value.includes("\n")) {
+          const subLines = bestMatch.value.split(/\r?\n/);
+          subLines.forEach((lineContent, index) => {
+            if (lineContent.length > 0) {
+              currentLine.push({ type: finalType, children: lineContent });
+            }
+            // 如果不是最後一段，表示遇到換行
+            if (index < subLines.length - 1) {
+              lines.push(currentLine);
+              currentLine = [];
+            }
+          });
+        } else {
+          currentLine.push({ type: finalType, children: bestMatch.value });
+        }
+
+        cursor += bestMatch.value.length;
+      } else {
+        // 匹配失敗，作為預設文字推進一個字元
+        currentLine.push({ type: "default", children: code[cursor] });
+        cursor++;
+      }
+    }
+
+    // 處理最後一行
+    if (currentLine.length > 0 || lines.length === 0) {
+      lines.push(currentLine);
+    }
+
+    return lines;
+  };
+};
+/**
  * `parseTokens` 是語法解析器的代理集合，用來解析特定語言的程式碼字串。
  *
  * 每個 key 對應一種可解析語言（如 `"javascript"`、`"python"` 等），
  * 傳入原始程式碼字串後，回傳解析後的 token 二維陣列（每行一組 token）。
  *
- *
  * @example
  * ```ts
  * const tokens = parseTokens.javascript("const x = 1;");
  * ```
- *
- * @returns 語法高亮用的 `CodeTokenProps` 二維陣列
+ * @returns 以 `ParsableLanguage` 為 key 的解析函式集合。
  */
-const parseTokens = new Proxy(
+export const parseTokens = new Proxy(
   {},
   {
     get: (_, prop: ParsableLanguage) => {
-      const parser = (content: string): CodeTokenProps<"span">[][] => {
-        const result: CodeTokenProps<"span">[][] = [];
+      if (!(prop in parserConfigs)) {
+        throw new Error(`Unsupported language: ${String(prop)}`);
+      }
 
-        return result;
-      };
+      const parser = createGenericParser(parserConfigs[prop]);
       return parser;
     },
-  }
-) as Record<ParsableLanguage, (content: string) => CodeTokenProps<"span">[][]>;
+  },
+) as Record<ParsableLanguage, ParseTokensFunction>;

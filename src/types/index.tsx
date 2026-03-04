@@ -148,3 +148,39 @@ export type CodeBlockProps<T extends React.ElementType = "span"> =
   >;
 
 export type ParsableLanguage = (typeof parsableLanguages)[number];
+
+/**
+ * 程式碼解析函式類型，接受原始程式碼字串，輸出 `CodeTokenProps` 的二維陣列。
+ *
+ * @example
+ * ```tsx
+ * const tokens = parseTokens.javascript("const x = 1;");
+ * ```
+ */
+export type ParseTokensFunction = (code: string) => CodeTokenProps[][];
+
+/**
+ * 為了方便擴充其他語言，我們將解析邏輯抽離為通用的 `createGenericParser` 工廠函式。
+ * 只要傳入該語言的一組 regex pattern 與關鍵字，即可產生對應的解析器。
+ */
+
+export type ParsableLanguageConfig = {
+  /**
+   * 該語言的 token 匹配規則，按優先順序排列。
+   * 注意：變數 (variable) 通常放在最後，作為 fallback。
+   */
+  patterns: { type: CodeTokenType; regex: RegExp }[];
+  /**
+   * 第一類關鍵字集合 (例如 control flow: if, return, ...)
+   */
+  keywords1?: Set<string>;
+  /**
+   * 第二類關鍵字集合 (例如 basic types, values: true, null, ...)
+   */
+  keywords2?: Set<string>;
+  /**
+   * 是否啟用函式偵測 (當變數後方緊接 "(" 時視為 function)
+   * @default true
+   */
+  detectFunctions?: boolean;
+};
