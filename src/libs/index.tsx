@@ -39,3 +39,20 @@ export const themeMap: Record<
 > = _themeRegistry;
 
 export const parsableLanguages = ["javascript"] as const;
+
+export const CODE_TOKEN_TYPES = [
+  "keyword1", // 關鍵字 1
+  "keyword2", // 關鍵字 2
+  "function", // 函式名稱
+  "string", // 字串常值
+  "number", // 數字常值
+  "comment", // 註解內容
+  "type",  // 類型定義
+  "variable",  // 變數名稱、函式名稱、類別名稱等識別符號
+  "constant", // 常數值，例如 enum 值、靜態屬性等
+  "brackets1", // 括號第一層
+  "brackets2", // 括號第二層
+  "brackets3", // 括號第三層
+  "operator", // 運算符號
+  "default", // 其他符號，例如逗號、分號、點號等
+] as const;

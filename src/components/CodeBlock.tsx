@@ -1,5 +1,19 @@
+import { CSSProperties } from "react";
 import { CodeBlockProps } from "../types/index";
 import { CodeLine } from "./CodeLine";
+
+const preStyle: CSSProperties = { margin: 0, padding: 0, overflowX: "auto" };
+const tableStyle: CSSProperties = { borderCollapse: "collapse", width: "100%" };
+const rowStyle: CSSProperties = { verticalAlign: "top" };
+const codeCellStyle: CSSProperties = { width: "100%" };
+const lineNumberBaseStyle: CSSProperties = {
+  paddingInline: "0.5rem",
+  textAlign: "right",
+  whiteSpace: "pre",
+  fontVariantNumeric: "tabular-nums",
+  color: "#888",
+  userSelect: "none",
+};
 
 /**
  * 顯示完整程式碼區塊，支援多行語法 token 與行號顯示。
@@ -21,27 +35,22 @@ export const CodeBlock = <T extends React.ElementType = "span">({
   ...rest
 }: CodeBlockProps<T>) => {
   return (
-    <pre {...rest} style={{ margin: 0, padding: 0, overflowX: "auto" }}>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+    <pre {...rest} style={preStyle}>
+      <table style={tableStyle}>
         <tbody>
           {tokenLines.map((line, index) => (
-            <tr key={index} style={{ verticalAlign: "top" }}>
+            <tr key={index} style={rowStyle}>
               {showLineNumbers && (
                 <td
                   style={{
-                    paddingInline: "0.5rem",
-                    textAlign: "right",
-                    whiteSpace: "pre",
-                    fontVariantNumeric: "tabular-nums",
-                    color: "#888",
-                    userSelect: "none",
+                    ...lineNumberBaseStyle,
                     ...lineNumberStyle,
                   }}
                 >
                   {index + 1}
                 </td>
               )}
-              <td style={{ width: "100%" }}>
+              <td style={codeCellStyle}>
                 <CodeLine theme={theme} tokens={line} autoWrap={autoWrap} />
               </td>
             </tr>

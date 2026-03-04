@@ -1,5 +1,6 @@
 import { parsableLanguages, themes } from "../libs";
 import { AsComponentProps, OverrideProps } from "./common";
+import { CODE_TOKEN_TYPES } from "../libs/index";
 /**
  * 用於表示語法高亮中每個 token 的語意分類，對應於 `<CodeToken />` 中的 `type`。
  *
@@ -22,18 +23,7 @@ import { AsComponentProps, OverrideProps } from "./common";
  * const token: CodeTokenType = "keyword1";
  * const token2: CodeTokenType = "string";
  */
-export type CodeTokenType =
-  | `keyword${1 | 2}` // 關鍵字，分兩種樣式
-  | "function" // 函式名
-  | "string" // 字串常值：'abc'、"hello"
-  | "number" // 數值常量：123、3.14
-  | "comment" // 註解內容：// 或 /* */
-  | "type" // 類型定義：type、interface、enum
-  | "variable" // 變數名、函式名、類別名等識別符號
-  | "constant" // 常數值：例如 enum 值、靜態屬性
-  | `brackets${1 | 2 | 3}` // 括號，多層巢狀不同樣式：{[()]}
-  | "operator" // 運算符號：=、+、*、===、<、>= 等
-  | "default"; // 其他符號：, ; . ? ! 等
+export type CodeTokenType = (typeof CODE_TOKEN_TYPES)[number];
 
 /**
  * 表示可用的語法高亮主題名稱。
@@ -67,7 +57,7 @@ export type CodeTokenProps<T extends React.ElementType = "span"> =
 
 export type CodeTokenBuilder = <T extends React.ElementType = "span">(
   children: CodeTokenProps<T>["children"],
-  props?: CodeTokenProps<T>
+  props?: CodeTokenProps<T>,
 ) => CodeTokenProps<T>;
 
 /**

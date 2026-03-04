@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { CodeLineProps } from "../types/index";
 import { CodeToken } from "./CodeToken";
 /**
@@ -11,7 +12,7 @@ import { CodeToken } from "./CodeToken";
  * @param rest 其他 HTMLAttributes
  * @returns JSX 元素，呈現語法 token 的單行程式碼
  */
-export const CodeLine = <T extends React.ElementType = "span">({
+const CodeLineInner = <T extends React.ElementType = "span">({
   style,
   tokens,
   theme,
@@ -32,5 +33,7 @@ export const CodeLine = <T extends React.ElementType = "span">({
     </code>
   );
 };
+
+export const CodeLine = memo(CodeLineInner);
 
 CodeLine.displayName = "CodeLine";

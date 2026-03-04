@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { themeMap } from "../libs/index";
 import { CodeTokenProps } from "../types/index";
 
@@ -13,7 +14,7 @@ import { CodeTokenProps } from "../types/index";
  * @param rest 其他 HTML 屬性
  * @returns JSX 元素，顯示帶有語法顏色的 token
  */
-export const CodeToken = <T extends React.ElementType = "span">({
+const CodeTokenInner = <T extends React.ElementType = "span">({
   as,
   style,
   children,
@@ -37,5 +38,7 @@ export const CodeToken = <T extends React.ElementType = "span">({
     </Tag>
   );
 };
+
+export const CodeToken = memo(CodeTokenInner);
 
 CodeToken.displayName = "CodeToken";
